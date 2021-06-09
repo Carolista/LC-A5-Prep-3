@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour Me Another | Drink Recipes</title>
+    <script src="script.js"></script>
+</head>
+<body>
+
+    <!-- Title -->
+    <h1 id="title">pour me another</h1>
+    <p id="byline">drink recipes courtesy of <a id="db-link" href="https://www.thecocktaildb.com/api.php" target="_blank">TheCocktailDB</a></p> 	
+
+    <!-- Form -->
+    <p>What are you looking for?</p>
+    <form>
+        <div class="input-item">
+            <input type="text" placeholder="Search by keyword" maxlength=20>
+        </div>
+        <div class="input-item">
+            <label><input type="radio" name="type" value="yes">Alcohol</label>
+            <label><input type="radio" name="type" value="no">No Alcohol</label>
+            <label><input type="radio" name="type" value="both">Both</label>
+        </div>
+        <div class="input-item">
+            <label class="filter">Category 
+                <select id="category" name="category">
+                    <!-- Will be populated by JS -->
+                </select>
+            </label>
+        </div>
+        <div class="input-item">
+            <label class="filter">Ingredient 
+                <select id="ingredient" name="ingredient">
+                    <!-- Will be populated by JS -->
+                </select>
+            </label>
+        </div>
+        <button id="submit" type="submit">Search</button>
+        <button id="reset" type="submit">Reset</button>
+    </form>
+
+    <!-- Results Area -->
+    <div id="results-area">
+        <!-- Will be populated by JS -->
+    </div>
+    
+</body>
+</html>
