@@ -6,48 +6,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pour Me Another | Drink Recipes</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <script src="script.js"></script>
 </head>
 <body>
 
-    <!-- Title -->
-    <h1 id="title">pour me another</h1>
-    <p id="byline">drink recipes courtesy of <a id="db-link" href="https://www.thecocktaildb.com/api.php" target="_blank">TheCocktailDB</a></p> 	
+    <!-- Header -->
+    <header>
+        <img id="logo" src="images/cocktail.png" height=100px width=100px />
+        <div id="header-text">
+            <h1 id="title">pour me another</h1>
+            <!-- TODO: move this to the footer and put a tagline instead -->
+            <!-- <h4 id="byline">drink recipes courtesy of <a id="db-link" href="https://www.thecocktaildb.com/api.php" target="_blank">TheCocktailDB</a></h4> 	 -->
+            <h4 id="tagline">drink recipes worthy of celebration</h4> 
+        </div>
+    </header>
 
-    <!-- Form -->
-    <p>What are you looking for?</p>
-    <form>
-        <div class="input-item">
-            <input type="text" placeholder="Search by keyword" maxlength=20>
-        </div>
-        <div class="input-item">
-            <label><input type="radio" name="type" value="yes">Alcohol</label>
-            <label><input type="radio" name="type" value="no">No Alcohol</label>
-            <label><input type="radio" name="type" value="both">Both</label>
-        </div>
-        <div class="input-item">
-            <label class="filter">Category 
-                <select id="category" name="category">
-                    <!-- Options will be populated by JS -->
-                </select>
-            </label>
-        </div>
-        <div class="input-item">
-            <label class="filter">Ingredient 
-                <select id="ingredient" name="ingredient">
-                    <!-- Options will be populated by JS -->
-                </select>
-            </label>
-        </div>
-        <button id="submit" type="submit">Search</button>
-        <button id="reset" type="reset">Reset</button>
-    </form>
+    <!-- Primary Content -->
+    <main>
 
-    <!-- Results Area -->
-    <div id="results-area">
-        <p id="no-results">No results to display.</p>
-        <!-- Results will be handled by JS -->
-    </div>
+        <!-- Form -->
+        <div id="search-area">
+            <form>
+                <div class="search-row">
+                    <h2>FIND RECIPES</h2>
+                    <div class="input-item">
+                        <input id="keyword-input" type="text" placeholder="Search by drink name" maxlength=20>
+                    </div>
+                    <div class="input-item">
+                        <label class="type-input"><input type="radio" name="type-input" value="yes">Alcohol</label>
+                        <label class="type-input"><input type="radio" name="type-input" value="no">No Alcohol</label>
+                        <label class="type-input"><input type="radio" name="type-input" value="both" checked="true">Both</label>
+                    </div>
+                </div>
+                <div class="search-row">
+                    <div class="input-item">
+                        <label class="filter">Category &nbsp;
+                            <select id="category-input" name="category">
+                                <!-- Options will be populated by JS -->
+                            </select>
+                        </label>
+                    </div>
+                    <div class="input-item">
+                        <label class="filter">Ingredient &nbsp;
+                            <select id="ingredient-input" name="ingredient">
+                                <!-- Options will be populated by JS -->
+                            </select>
+                        </label>
+                    </div>
+                    <div class="input-item">
+                        <button id="submit-button" type="submit">SEARCH</button>
+                        <button id="reset-button" type="reset">CLEAR ALL</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     
+        <!-- Results Area -->
+        <div id="results-area">
+            <div id="no-results">
+                <img id="empty-glass" src="images/empty-glass.png" />
+                <p class="no-results">No results to display.</p>
+                <p class="no-results">Try a search!</p>
+            </div>
+            <!-- Results will be handled by JS -->
+        </div>
+
+    </main>
 </body>
 </html>

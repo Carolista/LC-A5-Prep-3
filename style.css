@@ -1,12 +1,245 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
-    color: ghostwhite;
-    background-color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 11pt;
+    width: 100vw;
+    color: #333;
+    background: repeat top left url("./images/geo-bkg-soft.jpg");
+    padding: auto;
 }
 
-.recipe-block {
-    margin: 40px 0px 0px;
+header {
+    display: flex;
+    flex-direction: row;
+    width: 900px;
+    margin: 40px auto 25px;
 }
 
-.recipe-card {
-    
+div#header-text {
+    flex-direction: column;
+    margin-top: 17px;
+}
+
+main {
+    width: 900px;
+    margin: 0px auto;
+}
+
+h1 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    color: #7d078f;
+    margin: 0px 0px 10px;
+}
+
+h2 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin: 10px 0px 0px;
+}
+
+h3 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0px 0px 5px;
+}
+
+h4 {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 400;
+    font-size: 1.53rem;
+    color: #1166c1;
+    margin: 0px;
+
+}
+
+h5 {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 10px 0px 5px;
+}
+
+ul {
+    margin: 0px 0px 10px;
+}
+
+a {
+    color: #1166c1;
+    text-decoration: none;
+}
+
+div {
+    display: flex;
+}
+
+button {
+    color: white;
+    background-color: #1166c1;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    padding: 9px 12px 7px;
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #1073dc;
+}
+
+button#submit-button {
+    background-color: #58a00f;
+}
+
+button#submit-button:hover {
+    background-color: #64b810;
+}
+
+img.drink {
+    border-radius: 10px 0px 0px 10px;
+}
+
+img#empty-glass{
+    width: 250px;
+    margin: auto;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+div#no-results {
+    flex-direction: column;
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+p.no-results {
+    margin: 20px 0px 0px;
+}
+
+p.info {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    margin: 5px 0px;
+}
+
+p.glass {
+    font-style: italic;
+}
+
+p.directions {
+    margin: 5px 0px;
+}
+
+div#search-area {
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.55);
+    width: 100%;
+    padding: 20px 30px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 4px 4px 20px #ddd;
+}
+
+div.search-row {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.input-item {
+    margin: 10px 0px;
+    gap: 15px; /* spacing between radio buttons and buttons */
+}
+
+label {
+    font-size: 1.0rem;
+}
+input, select {
+    font-size: 1.0rem;
+    height: 40px;
+    padding: 6px 8px 4px;
+    border-radius: 6px;
+    border: 1px solid #999;
+}
+
+#keyword-input {  
+    width: 230px;  
+}
+
+#keyword-input::placeholder {
+    font-size: 1.0rem;
+    color: #bbb;
+}
+
+input[type=radio] {
+    height: auto; /* override general input style */
+    float: left;
+    margin-right: 8px;
+}
+
+.type-input {
+    display: block;
+    height: 25px;
+    font-size: 1.0rem;
+    margin-top: 10px;
+}
+
+div#results-area {
+    flex-direction: column;
+}
+
+div.recipe-card { 
+    flex-direction: row;
+    background-color: white;
+    padding: 0px;
+    margin: 15px 0px;
+    width: 100%;
+    height: 400px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 20px #ccc;
+}
+
+div.recipe-card-left {
+    padding: 0px;
+    width: 400px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+div.color-bar-1 {
+    height: 100%;
+    width: 20px;
+}
+
+div.recipe-card-right {
+    flex-direction: column;
+    color: #333;
+    width: 500px;
+    padding: 20px;
+}
+
+div.color-bar-2 {
+    height: 100%;
+    width: 80px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+div.alcohol {
+    background-color: #7d078f;
+}
+
+div.no-alcohol {
+    background-color: #1166c1;
 }
