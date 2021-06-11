@@ -7,13 +7,18 @@ let categories = [];
 let allDrinks = [];
 let currentDrinks = [];
 
+let colorClasses = {
+    "alcoholic": "alcohol",
+    "non alcoholic": "no-alcohol",
+    "optional alcohol": "optional"
+}
+
 function init() {
 
     /** CREATE OBJECTS FROM HTML ELEMENTS **/
     const searchArea = document.getElementById("search-area");
     const keywordInput = document.getElementById("keyword-input");
-    const typeInput = document.querySelector("input[name=type-input]")
-    const categorySelect = document.getElementById("category-input");
+    const categoryInput = document.getElementById("category-input");
     const submitButton = document.getElementById("submit-button");
     const resetButton = document.getElementById("reset-button");
     const resultsArea = document.getElementById("results-area");
@@ -22,7 +27,7 @@ function init() {
     const noResults = document.getElementById("no-results-text");
 
     /** POPULATE DROPDOWN INPUT **/
-    categorySelect.innerHTML = setCategoryOptions();
+    categoryInput.innerHTML = setCategoryOptions();
 
     /** TRIGGER AND RESET ANIMATIONS AS NEEDED **/
     const fadeInSearchBox = () => {
@@ -33,78 +38,97 @@ function init() {
         resultsArea.style.display = "none";
         resultsArea.style.animation = "none";   
     };
-    const fadeInResults = () => {
+    const fadeInResultsArea = () => {
         resultsArea.style.display = "block";
         resultsArea.style.animation = "fade-in 2s";
     };
-    const spinGlass = () => {
-        emptyGlass.style.animation = "zoom-spin 2s";
+    const spinGlass = (mode) => {
+        emptyGlass.style.animation = (mode === "zoom" ? "zoom-spin 2s" : "spin-only 1.5s");
         let spin = emptyGlass.getAnimations()[0];
         spin.finish();
         spin.play();
         emptyGlass.style.animation = "none";
     };
-    const clickGlass = () => {
-        emptyGlass.style.animation = "spin-only 1.5s";
-        let spin = emptyGlass.getAnimations()[0];
-        spin.finish();
-        spin.play();
-        emptyGlass.style.animation = "none";
+    const handleResetClick = () => {
+        currentDrinks = [];
+        cardsArea.innerHTML = "";
+        noResults.innerHTML = "Ready for a new search?";
+        resetResultsArea(); 
+        fadeInResultsArea();
+        spinGlass("zoom");
     };
 
     /** MAKE SEARCH AREA & RESULTS AREA VISIBLE UPON LOAD **/
     fadeInSearchBox();
-    fadeInResults();
-    spinGlass();
+    fadeInResultsArea();
+    spinGlass("zoom");
 
     /** LISTEN FOR EVENTS **/
     submitButton.addEventListener("click", (event) => {
-        // TODO: add logic to filter drinks acc to settings
+        const typeInput = document.querySelector("input[name=type]:checked")
         // TODO: Consider randomizing instead of sorting?
         // FIXME: Need a better sorting algorithm, maybe recursive quicksort?
         resetResultsArea();
         currentDrinks = allDrinks.slice(); // Make a copy       
         // currentDrinks.sort((a, b) => {return a.name - b.name});
-        // filterDrinks();
+        filterDrinks(typeInput.value, categoryInput.value, keywordInput.value);
         setTimeout(() => {
             cardsArea.innerHTML = displayResults();
-            fadeInResults();
+            fadeInResultsArea();
         }, 250); // Slight delay to accommodate image loading
         event.preventDefault();
     });
     resetButton.addEventListener("click", () => {
         if (currentDrinks.length === 0) {
-            clickGlass();
+            spinGlass("click");
             return;
-        }
-        currentDrinks = [];
-        cardsArea.innerHTML = "";
-        noResults.innerHTML = "Ready for a new search?";
-        resetResultsArea(); 
-        fadeInResults();
-        spinGlass();
+        } else {
+            handleResetClick();
+        }    
     });
     emptyGlass.addEventListener("click", () => {
-        clickGlass();
+        spinGlass("click");
     });
 
     /** FILTER DRINKS ACCORDING TO USER INPUT **/
-    function filterDrinks() {
-
+    function filterDrinks(type, category, keyword) {
+        if (type === "alcoholic") {
+            currentDrinks = currentDrinks.filter(drink => {
+                return (drink.type.toLowerCase() !== "non alcoholic");     
+            });
+        } else if (type === "non-alcoholic") {
+            currentDrinks = currentDrinks.filter(drink => {
+                return (drink.type.toLowerCase() !== "alcoholic");     
+            });
+        }
+        if (category !== "" && category !== "category") {
+            currentDrinks = currentDrinks.filter(drink => {
+                return drink.category.toLowerCase() === category.toLowerCase();     
+            });
+        }
+        if (keyword !== "") {
+            currentDrinks = currentDrinks.filter(drink => {
+                let nameAndIngredients = (drink.name + drink.ingredients.join(" ")).toLowerCase();
+                return nameAndIngredients.indexOf(keyword.toLowerCase()) !== -1;     
+            });
+        }
+        if (currentDrinks.length === 0) {
+            handleResetClick();
+        }
     }
 
     /** ONCE DRINKS ARE FILTERED, DISPLAY RESULTS **/
     function displayResults() {
         if (currentDrinks.length === 0) {
             noResults.innerHTML = "No results found. Try again!";
-            return;
+            return null;
         }
         let results = `
             <h4 id="num-results">${currentDrinks.length} results found.</h4>
         `;
         let color, listItems;
         currentDrinks.forEach(drink => {
-            color = (drink.type.toLowerCase() === "alcoholic" ? "alcohol" : "no-alcohol");
+            color = colorClasses[drink.type.toLowerCase()];
             listItems = "";
             drink.ingredients.map(ingredient => listItems += `<li>${ingredient.replace(ingredient[0], ingredient[0].toUpperCase())}</li>`);
             results += `
@@ -112,7 +136,8 @@ function init() {
                     <div class="recipe-card-left">
                         <img class="drink" src="${drink.image}" />
                     </div>
-                    <div class="color-bar-1 ${color}"></div>
+                    <div class="color-bar-1"></div>
+                    <div class="color-bar-2 ${color}"></div>
                     <div class="recipe-card-right">
                         <h3>${drink.name}</h3>
                         <p class="info">${drink.category} &bull; ${drink.type}</p>
@@ -123,7 +148,7 @@ function init() {
                         <p class="directions">${drink.directions}</p>
                         <p class="glass">Enjoy your ${drink.name} in a <span class="capitalize">${drink.glass}</span>.</p>
                     </div>
-                    <div class="color-bar-2 ${color}"></div>
+                    <div class="color-bar-3"></div>
                 </div>
             `;
         });
@@ -149,9 +174,7 @@ function fetchDrinks() {
                             let ing = drink["strIngredient" + num];
                             let msr = drink["strMeasure" + num];
                             if (ing !== null && ing !== "") {
-                                // console.log("ing is " + ing);
                                 if (msr !== null && msr !== "") {
-                                    // console.log("msr is " + msr)
                                     ingredientList.push(`${ing}, ${msr.trim()}`);
                                 } else {
                                     ingredientList.push(`${ing}`);
@@ -196,7 +219,7 @@ function fetchCategories() {
 // Create HTML for all <option> tags in the Category dropdown
 function setCategoryOptions() {
     let options = `
-        <option value="any">Category</option>
+        <option value="category">Category</option>
     `;
     for (let i=0; i < categories.length; i++) {
         options += `
