@@ -13,12 +13,8 @@ let currentDrinks = [];
 
 function init() {
 
-    /** ALPHABETIZE DRINKS BY NAME **/
-    // FIXME: Consider randomizing instead if still not working, or sort each time submit is clicked
-    allDrinks.sort((a,b) => {return a.name - b.name});
-    console.log("All drinks sorted.");
-    
     /** CREATE OBJECTS FROM HTML ELEMENTS **/
+    const searchArea = document.getElementById("search-area");
     const keywordInput = document.getElementById("keyword-input");
     const typeInput = document.querySelector("input[name=type-input]")
     const categorySelect = document.getElementById("category-input");
@@ -26,41 +22,94 @@ function init() {
     const submitButton = document.getElementById("submit-button");
     const resetButton = document.getElementById("reset-button");
     const resultsArea = document.getElementById("results-area");
+    const cardsArea = document.getElementById("cards-area");
+    const emptyGlass = document.getElementById("empty-glass");
+    const noResults = document.getElementById("no-results-text");
 
     /** POPULATE DROPDOWN INPUTS **/
     categorySelect.innerHTML = setCategoryOptions();
     ingredientSelect.innerHTML = setIngredientOptions();
 
+    /** TRIGGER AND RESET ANIMATIONS AS NEEDED **/
+    const fadeInSearchBox = () => {
+        searchArea.style.display = "block";
+        searchArea.style.animation = "fade-in 3.5s";
+    };
+    const resetResultsArea = () => {
+        resultsArea.style.display = "none";
+        resultsArea.style.animation = "none";   
+    };
+    const fadeInResults = () => {
+        resultsArea.style.display = "block";
+        resultsArea.style.animation = "fade-in 2s";
+    };
+    const spinGlass = () => {
+        emptyGlass.style.animation = "zoom-spin 2s";
+        let spin = emptyGlass.getAnimations()[0];
+        spin.finish();
+        spin.play();
+        emptyGlass.style.animation = "none";
+    };
+    const clickGlass = () => {
+        emptyGlass.style.animation = "spin-only 1.5s";
+        let spin = emptyGlass.getAnimations()[0];
+        spin.finish();
+        spin.play();
+        emptyGlass.style.animation = "none";
+    };
+
+    /** MAKE SEARCH AREA & RESULTS AREA VISIBLE **/
+    fadeInSearchBox();
+    fadeInResults();
+    emptyGlass.style.animation = "zoom-spin 2s";
+
     /** LISTEN FOR EVENTS **/
     submitButton.addEventListener("click", (event) => {
-        // FIXME: temporarily set currentDrinks to allDrinks
-        currentDrinks = allDrinks.slice();  
         // TODO: add logic to filter drinks acc to settings
-        resultsArea.innerHTML = displayResults(); 
+        // TODO: Consider randomizing instead of sorting?
+        // FIXME: Need a better sorting algorithm, maybe recursive quicksort?
+
+        resetResultsArea();
+        currentDrinks = allDrinks.slice(); // Make a copy       
+        currentDrinks.sort((a, b) => {return a.name - b.name});
+
+        setTimeout(() => {
+            cardsArea.innerHTML = displayResults();
+            fadeInResults();
+        }, 200); // Slight delay to accommodate image loading
         event.preventDefault();
     });
-    resetButton.addEventListener("click", (event) => {
+    resetButton.addEventListener("click", () => {
+        if (currentDrinks.length === 0) {
+            clickGlass();
+            return;
+        }
         currentDrinks = [];
-        resultsArea.innerHTML = `
-            <div id="no-results">
-                <img id="empty-glass" src="images/empty-glass.png" />
-                <p class="no-results">No results to display.</p>
-                <p class="no-results">Try a new search!</p>
-            </div>
-        `;
+        cardsArea.innerHTML = "";
+        noResults.innerHTML = "Ready for a new search?";
+        resetResultsArea(); 
+        fadeInResults();
+        spinGlass();
+    });
+    emptyGlass.addEventListener("click", () => {
+        clickGlass();
     });
 
+
     /** USE FORM INPUT CRITERIA TO GET AND DISPLAY RESULTS **/
-
-    
-
     function displayResults() {
-        let results = "";
+        if (currentDrinks.length === 0) {
+            noResults.innerHTML = "No results found. Try again!";
+            return;
+        }
+        let results = `
+            <h4 id="num-results">${currentDrinks.length} results found.</h4>
+        `;
         let color, listItems;
         currentDrinks.forEach(drink => {
             color = (drink.type.toLowerCase() === "alcoholic" ? "alcohol" : "no-alcohol");
             listItems = "";
-            drink.ingredients.map(ingredient => listItems += `<li>${ingredient}</li>`);
+            drink.ingredients.map(ingredient => listItems += `<li>${ingredient.replace(ingredient[0], ingredient[0].toUpperCase())}</li>`);
             results += `
                 <div class="recipe-card">
                     <div class="recipe-card-left">
@@ -70,11 +119,12 @@ function init() {
                     <div class="recipe-card-right">
                         <h3>${drink.name}</h3>
                         <p class="info">${drink.category} &bull; ${drink.type}</p>
-                        <p class="glass">Enjoy your ${drink.name} in a <span class="capitalize">${drink.glass}</span>.</p>
+                        
                         <h5>Ingredients</h5>
-                        <ul>${listItems}</ul>
+                        <ul class="ingredients-list">${listItems}</ul>
                         <h5>Directions</h5>
                         <p class="directions">${drink.directions}</p>
+                        <p class="glass">Enjoy your ${drink.name} in a <span class="capitalize">${drink.glass}</span>.</p>
                     </div>
                     <div class="color-bar-2 ${color}"></div>
                 </div>
@@ -82,6 +132,8 @@ function init() {
         });
         return results;
     }
+
+    
 }
 
 function fetchDrinks() {
@@ -156,7 +208,7 @@ function fetchIngredients() {
             console.log("Ingredients loaded.");
             setTimeout(() => {
                 init(); 
-            }, 500);
+            }, 300);
         });
     });
 }

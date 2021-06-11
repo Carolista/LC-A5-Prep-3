@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +8,10 @@
     <title>Pour Me Another | Drink Recipes</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;600&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <script src="script.js"></script>
 </head>
+
 <body>
 
     <!-- Header -->
@@ -20,7 +21,7 @@
             <h1 id="title">pour me another</h1>
             <!-- TODO: move this to the footer and put a tagline instead -->
             <!-- <h4 id="byline">drink recipes courtesy of <a id="db-link" href="https://www.thecocktaildb.com/api.php" target="_blank">TheCocktailDB</a></h4> 	 -->
-            <h4 id="tagline">drink recipes worthy of celebration</h4> 
+            <h4 id="tagline">delicious drinks for every occasion</h4> 
         </div>
     </header>
 
@@ -66,14 +67,17 @@
     
         <!-- Results Area -->
         <div id="results-area">
+            <div id="cards-area">
+                <!-- Results will be handled by JS -->
+            </div>
             <div id="no-results">
                 <img id="empty-glass" src="images/empty-glass.png" />
-                <p class="no-results">No results to display.</p>
-                <p class="no-results">Try a search!</p>
+                <p id="no-results-text">Search for recipes above!</p>
             </div>
-            <!-- Results will be handled by JS -->
         </div>
 
     </main>
+
 </body>
+
 </html>
