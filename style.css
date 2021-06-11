@@ -12,12 +12,19 @@ body {
     padding: auto;
 }
 
-header {
+header, footer {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 900px;
+    width: 900px;  
+}
+
+header {
     margin: 40px auto 30px;
+}
+
+footer {
+    margin: 0px auto 40px;
 }
 
 div#header-text {
@@ -75,6 +82,10 @@ ul {
 a {
     color: #1166c1;
     text-decoration: none;
+}
+
+a:hover {
+    color: #1073dc;
 }
 
 div {
@@ -135,6 +146,8 @@ div#no-results {
 }
 
 #num-results {
+    font-size: 1.2rem;
+    font-weight: 700;
     text-align: center;
     margin: 10px 0px 20px;
 }
@@ -191,7 +204,7 @@ input, select {
 }
 
 #keyword-input {  
-    width: 230px;  
+    width: 300px;  
 }
 
 #keyword-input::placeholder {
@@ -213,7 +226,8 @@ input[type=radio] {
     margin-top: 10px;
 }
 
-#category-input, #ingredient-input {
+#category-input {
+    width: 230px;
     cursor: pointer;
 }
 
@@ -268,6 +282,10 @@ div.alcohol {
 
 div.no-alcohol {
     background-color: #1166c1;
+}
+
+#credits {
+    text-align: center;
 }
 
 @keyframes fade-in {

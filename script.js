@@ -1,15 +1,11 @@
 window.addEventListener("load", function() {
     fetchDrinks();
-    // Note: init() is called from fetchIngredients() to make sure fetched data has returned from the API before the page is rendered. All fetch functions are chained this way.
+    // Note: init() is called from fetchCategories() to make sure fetched data has returned from the API before the page is rendered. All fetch functions are chained this way.
 });
 
 let categories = [];
-let ingredients = [];
 let allDrinks = [];
 let currentDrinks = [];
-
-// TODO: Create splash screen effect to fade to white while data is loading ?
-// TODO: Consider nixing ingredients dropdown and just make it part of keyword search
 
 function init() {
 
@@ -18,7 +14,6 @@ function init() {
     const keywordInput = document.getElementById("keyword-input");
     const typeInput = document.querySelector("input[name=type-input]")
     const categorySelect = document.getElementById("category-input");
-    const ingredientSelect = document.getElementById("ingredient-input");
     const submitButton = document.getElementById("submit-button");
     const resetButton = document.getElementById("reset-button");
     const resultsArea = document.getElementById("results-area");
@@ -26,14 +21,13 @@ function init() {
     const emptyGlass = document.getElementById("empty-glass");
     const noResults = document.getElementById("no-results-text");
 
-    /** POPULATE DROPDOWN INPUTS **/
+    /** POPULATE DROPDOWN INPUT **/
     categorySelect.innerHTML = setCategoryOptions();
-    ingredientSelect.innerHTML = setIngredientOptions();
 
     /** TRIGGER AND RESET ANIMATIONS AS NEEDED **/
     const fadeInSearchBox = () => {
         searchArea.style.display = "block";
-        searchArea.style.animation = "fade-in 3.5s";
+        searchArea.style.animation = "fade-in 3s";
     };
     const resetResultsArea = () => {
         resultsArea.style.display = "none";
@@ -58,25 +52,24 @@ function init() {
         emptyGlass.style.animation = "none";
     };
 
-    /** MAKE SEARCH AREA & RESULTS AREA VISIBLE **/
+    /** MAKE SEARCH AREA & RESULTS AREA VISIBLE UPON LOAD **/
     fadeInSearchBox();
     fadeInResults();
-    emptyGlass.style.animation = "zoom-spin 2s";
+    spinGlass();
 
     /** LISTEN FOR EVENTS **/
     submitButton.addEventListener("click", (event) => {
         // TODO: add logic to filter drinks acc to settings
         // TODO: Consider randomizing instead of sorting?
         // FIXME: Need a better sorting algorithm, maybe recursive quicksort?
-
         resetResultsArea();
         currentDrinks = allDrinks.slice(); // Make a copy       
-        currentDrinks.sort((a, b) => {return a.name - b.name});
-
+        // currentDrinks.sort((a, b) => {return a.name - b.name});
+        // filterDrinks();
         setTimeout(() => {
             cardsArea.innerHTML = displayResults();
             fadeInResults();
-        }, 200); // Slight delay to accommodate image loading
+        }, 250); // Slight delay to accommodate image loading
         event.preventDefault();
     });
     resetButton.addEventListener("click", () => {
@@ -95,8 +88,12 @@ function init() {
         clickGlass();
     });
 
+    /** FILTER DRINKS ACCORDING TO USER INPUT **/
+    function filterDrinks() {
 
-    /** USE FORM INPUT CRITERIA TO GET AND DISPLAY RESULTS **/
+    }
+
+    /** ONCE DRINKS ARE FILTERED, DISPLAY RESULTS **/
     function displayResults() {
         if (currentDrinks.length === 0) {
             noResults.innerHTML = "No results found. Try again!";
@@ -131,10 +128,8 @@ function init() {
             `;
         });
         return results;
-    }
-
-    
-}
+    }   
+} // end of init()
 
 function fetchDrinks() {
     let alpha = "abcdefghijklmnopqrstuvwxyz";
@@ -168,7 +163,7 @@ function fetchDrinks() {
                         // Then create the new object to be mapped to the drinks array
                         return {
                             name: drink.strDrink,
-                            category: drink.strCategory,
+                            category: drink.strCategory.split(" / ").join("/"),
                             type: drink.strAlcoholic,
                             glass: drink.strGlass,
                             ingredients: ingredientList,
@@ -193,22 +188,7 @@ function fetchCategories() {
             categories = categoryObjects.map(category => category.strCategory.split(" / ").join("/"));
             categories.sort();
             console.log("Categories loaded.");
-            fetchIngredients();       
-        });
-    });
-}
-
-// Get all possible ingredients from API, needed for Ingredient dropdown input
-function fetchIngredients() {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list").then( function(response) {
-        response.json().then( function(json) {
-            let ingredientsObjects = json.drinks;
-            ingredients = ingredientsObjects.map(ingredient => ingredient.strIngredient1);
-            ingredients.sort();
-            console.log("Ingredients loaded.");
-            setTimeout(() => {
-                init(); 
-            }, 300);
+            init();       
         });
     });
 }
@@ -216,24 +196,11 @@ function fetchIngredients() {
 // Create HTML for all <option> tags in the Category dropdown
 function setCategoryOptions() {
     let options = `
-        <option value="any">Any</option>
+        <option value="any">Category</option>
     `;
     for (let i=0; i < categories.length; i++) {
         options += `
             <option value="${categories[i].toLowerCase()}">${categories[i]}</option>
-        `;
-    }
-    return options;
-}
-
-// Create HTML for all <option> tags in the Ingredient dropdown
-function setIngredientOptions() {
-    let options = `
-        <option value="any">Any</option>
-    `;
-    for (let i=0; i < ingredients.length; i++) {
-        options += `
-            <option value="${ingredients[i].toLowerCase()}">${ingredients[i]}</option>
         `;
     }
     return options;

@@ -19,8 +19,6 @@
         <img id="logo" src="images/cocktail.png" height=100px width=100px />
         <div id="header-text">
             <h1 id="title">pour me another</h1>
-            <!-- TODO: move this to the footer and put a tagline instead -->
-            <!-- <h4 id="byline">drink recipes courtesy of <a id="db-link" href="https://www.thecocktaildb.com/api.php" target="_blank">TheCocktailDB</a></h4> 	 -->
             <h4 id="tagline">delicious drinks for every occasion</h4> 
         </div>
     </header>
@@ -34,9 +32,6 @@
                 <div class="search-row">
                     <h2>FIND RECIPES</h2>
                     <div class="input-item">
-                        <input id="keyword-input" type="text" placeholder="Search by drink name" maxlength=20>
-                    </div>
-                    <div class="input-item">
                         <label class="type-input"><input type="radio" name="type-input" value="yes">Alcohol</label>
                         <label class="type-input"><input type="radio" name="type-input" value="no">No Alcohol</label>
                         <label class="type-input"><input type="radio" name="type-input" value="both" checked="true">Both</label>
@@ -44,18 +39,12 @@
                 </div>
                 <div class="search-row">
                     <div class="input-item">
-                        <label class="filter">Category &nbsp;
-                            <select id="category-input" name="category">
-                                <!-- Options will be populated by JS -->
-                            </select>
-                        </label>
+                        <select id="category-input" name="category">
+                            <!-- Options will be populated by JS -->
+                        </select>
                     </div>
                     <div class="input-item">
-                        <label class="filter">Ingredient &nbsp;
-                            <select id="ingredient-input" name="ingredient">
-                                <!-- Options will be populated by JS -->
-                            </select>
-                        </label>
+                        <input id="keyword-input" type="text" placeholder="Drink name or ingredient" maxlength=20>
                     </div>
                     <div class="input-item">
                         <button id="submit-button" type="submit">SEARCH</button>
@@ -77,6 +66,10 @@
         </div>
 
     </main>
+
+    <footer>
+        <p id="credits">drink recipes courtesy of <a id="db-link" href="https://www.thecocktaildb.com/api.php" target="_blank">TheCocktailDB</a></p> 	
+    </footer>
 
 </body>
 
