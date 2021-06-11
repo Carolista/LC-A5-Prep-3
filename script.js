@@ -23,8 +23,9 @@ function init() {
     const resetButton = document.getElementById("reset-button");
     const resultsArea = document.getElementById("results-area");
     const cardsArea = document.getElementById("cards-area");
+    const noResults = document.getElementById("no-results");
     const emptyGlass = document.getElementById("empty-glass");
-    const noResults = document.getElementById("no-results-text");
+    const noResultsText = document.getElementById("no-results-text");
 
     /** POPULATE DROPDOWN INPUT **/
     categoryInput.innerHTML = setCategoryOptions();
@@ -49,11 +50,22 @@ function init() {
         spin.play();
         emptyGlass.style.animation = "none";
     };
+    const handleSubmitClick = (type) => {
+        resetResultsArea();
+        currentDrinks = allDrinks.slice(); // Make a copy       
+        filterDrinks(type.value, categoryInput.value, keywordInput.value);          
+        setTimeout(() => {
+            cardsArea.innerHTML = displayResults();
+            fadeInResultsArea();
+            noResults.style.display = "none";
+        }, 250); // Slight delay to accommodate image loading
+    };
     const handleResetClick = () => {
         currentDrinks = [];
         cardsArea.innerHTML = "";
-        noResults.innerHTML = "Ready for a new search?";
+        noResultsText.innerHTML = "Ready for a new search?";
         resetResultsArea(); 
+        noResults.style.display = "block";
         fadeInResultsArea();
         spinGlass("zoom");
     };
@@ -65,17 +77,12 @@ function init() {
 
     /** LISTEN FOR EVENTS **/
     submitButton.addEventListener("click", (event) => {
-        const typeInput = document.querySelector("input[name=type]:checked")
-        // TODO: Consider randomizing instead of sorting?
-        // FIXME: Need a better sorting algorithm, maybe recursive quicksort?
-        resetResultsArea();
-        currentDrinks = allDrinks.slice(); // Make a copy       
-        // currentDrinks.sort((a, b) => {return a.name - b.name});
-        filterDrinks(typeInput.value, categoryInput.value, keywordInput.value);
-        setTimeout(() => {
-            cardsArea.innerHTML = displayResults();
-            fadeInResultsArea();
-        }, 250); // Slight delay to accommodate image loading
+        const typeInput = document.querySelector("input[name=type]:checked");
+        if (typeInput === null) {
+            alert("\nPlease select alcoholic, non-alcoholic, or both.");
+        } else {
+            handleSubmitClick(typeInput);
+        }
         event.preventDefault();
     });
     resetButton.addEventListener("click", () => {
@@ -112,6 +119,24 @@ function init() {
                 return nameAndIngredients.indexOf(keyword.toLowerCase()) !== -1;     
             });
         }
+        // FIXME: Make it possible to handle multiple keywords
+        // if (keyword !== "") {
+        //     let words = keyword.split(" ");
+        //     let matchFound = false;
+        //     currentDrinks = currentDrinks.filter(drink => {
+        //         let nameAndIngredients = (drink.name + drink.ingredients.join(" ")).toLowerCase();
+        //         words.forEach(word => {
+        //             if (nameAndIngredients.indexOf(word.toLowerCase()) !== -1) {
+        //                 console.log("found a match");
+        //                 matchFound = true;
+        //             }
+        //         });   
+        //         return matchFound;
+        //     });
+        // }
+        // TODO: Consider randomizing instead of sorting?
+        // FIXME: Need a better sorting algorithm, maybe recursive quicksort?
+        currentDrinks.sort((a, b) => {return a.name - b.name});
         if (currentDrinks.length === 0) {
             handleResetClick();
         }
@@ -119,12 +144,13 @@ function init() {
 
     /** ONCE DRINKS ARE FILTERED, DISPLAY RESULTS **/
     function displayResults() {
-        if (currentDrinks.length === 0) {
-            noResults.innerHTML = "No results found. Try again!";
+        let numDrinks = currentDrinks.length;
+        if (numDrinks === 0) {
+            noResultsText.innerHTML = "No results found. Try again!";
             return null;
         }
         let results = `
-            <h4 id="num-results">${currentDrinks.length} results found.</h4>
+            <h4 id="num-results">${numDrinks} result${numDrinks === 1 ? "" : "s"} found.</h4>
         `;
         let color, listItems;
         currentDrinks.forEach(drink => {
@@ -137,7 +163,6 @@ function init() {
                         <img class="drink" src="${drink.image}" />
                     </div>
                     <div class="color-bar-1"></div>
-                    <div class="color-bar-2 ${color}"></div>
                     <div class="recipe-card-right">
                         <h3>${drink.name}</h3>
                         <p class="info">${drink.category} &bull; ${drink.type}</p>
@@ -148,6 +173,7 @@ function init() {
                         <p class="directions">${drink.directions}</p>
                         <p class="glass">Enjoy your ${drink.name} in a <span class="capitalize">${drink.glass}</span>.</p>
                     </div>
+                    <div class="color-bar-2 ${color}"></div>
                     <div class="color-bar-3"></div>
                 </div>
             `;

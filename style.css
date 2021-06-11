@@ -277,8 +277,10 @@ div.color-bar-2 {
 div.recipe-card-right {
     flex-direction: column;
     color: #333;
+    height: 100%;
     width: 500px;
     padding: 20px;
+    overflow-y: scroll;
 }
 
 div.color-bar-3 {
