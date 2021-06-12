@@ -70,6 +70,9 @@ function init() {
         spinGlass("zoom");
     };
 
+    // FIXME: empty glass disappears if two mutually exclusive filters are applied - 
+    // AND then the empty glass can't be found, which breaks the reset button
+
     /** MAKE SEARCH AREA & RESULTS AREA VISIBLE UPON LOAD **/
     fadeInSearchBox();
     fadeInResultsArea();
@@ -164,12 +167,12 @@ function init() {
                     </div>
                     <div class="color-bar-1"></div>
                     <div class="recipe-card-right">
-                        <h3>${drink.name}</h3>
+                        <p class="drink-name">${drink.name}</p>
                         <p class="info">${drink.category} &bull; ${drink.type}</p>
                         
-                        <h5>Ingredients</h5>
+                        <p class="subheader">Ingredients</p>
                         <ul class="ingredients-list">${listItems}</ul>
-                        <h5>Directions</h5>
+                        <p class="subheader">Directions</p>
                         <p class="directions">${drink.directions}</p>
                         <p class="glass">Enjoy your ${drink.name} in a <span class="capitalize">${drink.glass}</span>.</p>
                     </div>
