@@ -2,32 +2,47 @@
     box-sizing: border-box;
 }
 
-/* TODO: If there is time, make a second branch with masonry layout instead */
+html {
+    height: 100vh;
+}
 
 body {
+    display: flex;
+    flex-direction: column;
+    color: #333;
+    background: repeat top left url("./images/geo-bkg-soft.jpg");
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 11pt;
     width: 100vw;
-    color: #333;
-    background: repeat top left url("./images/geo-bkg-soft.jpg");
-    padding: auto;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
     overflow-x: hidden;
 }
 
 header, footer {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    width: 900px;  
+    flex-shrink: 0;
+    justify-content: center;  
+    margin: 0px auto;
 }
 
 header {
-    margin: 40px auto 30px;
+    width: 900px; 
+    padding: 30px;
 }
 
 footer {
-    margin: 0px auto 40px;
+    position: relative;
+    background-color: #1166c1;
+    text-align: center;
+    color: #97c2f0;
+    width: 100%;
+    left: 0px;
+    bottom: 0px;
+    padding: 20px;
 }
 
 div#header-text {
@@ -36,8 +51,9 @@ div#header-text {
 }
 
 main {
+    flex: 1 0 auto;
     width: 900px;
-    margin: 0px auto;
+    margin: 0px auto 40px;
 }
 
 #title {
@@ -82,13 +98,14 @@ ul {
     margin: 0px 0px 10px;
 }
 
-a {
-    color: #1166c1;
+a#db-link {
+    color: #97c2f0;
+    font-weight: 700;
     text-decoration: none;
 }
 
-a:hover {
-    color: #1073dc;
+a#db-link:hover {
+    color: #fff;
 }
 
 div {
@@ -149,6 +166,8 @@ div#no-results {
 }
 
 #num-results {
+    color: #1166c1;
+    font-family: 'Syncopate', sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
     text-align: center;
@@ -275,11 +294,14 @@ div.color-bar-2 {
 }
 
 div.recipe-card-right {
-    flex-direction: column;
     color: #333;
     height: 100%;
     width: 500px;
     padding: 20px;
+}
+
+div.recipe-info {
+    flex-direction: column;
     overflow-y: scroll;
 }
 
@@ -300,10 +322,6 @@ div.no-alcohol {
 
 div.optional {
     background-color: darkred;
-}
-
-#credits {
-    text-align: center;
 }
 
 @keyframes fade-in {
