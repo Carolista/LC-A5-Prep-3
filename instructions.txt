@@ -3,3 +3,87 @@ POUR ME ANOTHER | DRINK RECIPES
 This app utilizes TheCocktailDB; details are here: https://www.thecocktaildb.com/api.php
 
 
+(Instructions for Parts A and B are in starter-code branch)
+
+
+**** PART C: ADD ANIMATIONS ****
+
+1. Go to styles.css. 
+    a) Un-comment the display and animation properties of both #search-area and #results-area. 
+    b) At the very bottom, uncomment all @keyframes.
+
+2. Go to scripts.js.
+
+    a) Add objects representing the #search-area and #results-area divs and the #empty-glass image to the lists of objects at the beginning of the init() function.
+
+        const searchArea = document.getElementById("search-area");
+
+        const resultsArea = document.getElementById("results-area");
+        const emptyGlass = document.getElementById("empty-glass");
+
+    b) Add the following just after the handleResetClick() function at the end of init()):
+
+        /** TRIGGER AND RESET ANIMATIONS AS NEEDED **/
+        function fadeInSearchBox() {
+            searchArea.style.display = "block";
+            searchArea.style.animation = "fade-in 3s";
+        };
+        function resetResultsArea() {
+            resultsArea.style.display = "none";
+            resultsArea.style.animation = "none";   
+        };
+        function fadeInResultsArea() {
+            resultsArea.style.display = "block";
+            resultsArea.style.animation = "fade-in 2s";
+        };
+        function spinGlass(mode) {
+            emptyGlass.style.animation = (mode === "zoom" ? "zoom-spin 2s" : "spin-only 1.5s");
+            let spin = emptyGlass.getAnimations()[0];
+            spin.finish();
+            spin.play();
+            emptyGlass.style.animation = "none";
+        };
+
+    c) Add the following inside init(), just after the dropdown population with
+    categoryInput.innerHTML = setCategoryOptions():
+
+        /** MAKE SEARCH AREA & RESULTS AREA VISIBLE UPON LOAD **/
+        fadeInSearchBox();
+        fadeInResultsArea();
+        spinGlass("zoom");
+
+    d) In the reset button event listener, replace handleResetClick(); with the following:
+
+        if (currentDrinks.length > 0) {
+            handleResetClick();        
+        } else {
+            spinGlass("click");
+        }  
+
+    e) Just below the rest button event listener, add a new event listener for the empty glass image by pasting in the following:
+
+        emptyGlass.addEventListener("click", () => {
+            spinGlass("click");
+        });
+
+    f) Inside the handleSubmitClick() function, add the following to different places as directed by text in parentheses:
+
+        (at the beginning)
+            // Temporarily hide everything below form and remove animation
+            resetResultsArea();
+
+        (in the if block, just after // Trigger animations)
+            setTimeout(() => {         
+                fadeInResultsArea();
+            }, 150); // Slight delay to accommodate image loading
+
+        (in the else block, just after // Trigger animations)
+            handleResetClick();
+
+    g) Inside the handleResetClick() function, add the following:
+
+        (below // Trigger animations)
+            resetResultsArea(); 
+            fadeInResultsArea();
+            spinGlass("zoom");
+        

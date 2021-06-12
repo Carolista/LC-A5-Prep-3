@@ -126,8 +126,9 @@ div#header-text {
     border-radius: 10px;
     margin-bottom: 20px;
     box-shadow: 4px 4px 20px #ddd;
-    display: none;
-    animation: none;
+    /* TODO: uncomment lines below (see Part C, 1a) */
+    /* display: none;
+    animation: none; */
 }
 
 .search-row {
@@ -147,18 +148,18 @@ div#header-text {
     gap: 15px; /* spacing between buttons */
 }
 
-input[type=radio] {
-    height: auto; /* override general input style */
-    float: left;
-    margin-right: 8px;
-    cursor: pointer;
-}
-
 .type-label {
     display: block;
     height: 25px;
     font-size: 1.0rem;
     margin-top: 10px;
+}
+
+input[type=radio] {
+    height: auto; /* override general input style */
+    float: left;
+    margin-right: 8px;
+    cursor: pointer;
 }
 
 #category-input {
@@ -189,8 +190,9 @@ button#submit-button:hover {
 
 #results-area { /* encompasses both search-results and no-results */
     flex-direction: column;
-    display: none;
-    animation: none;
+    /* TODO: uncomment lines below (see Part C, 1a) */
+    /* display: none; */
+    /* animation: none; */
 }
 
 /* RESULTS COUNT & RECIPE CARDS */
@@ -342,7 +344,9 @@ a#db-link:hover {
 
 /* ANIMATIONS */
 
-@keyframes fade-in {
+/* TODO: uncomment lines below (see Part C, 1b) */
+
+/* @keyframes fade-in {
     from {
         opacity: 0;
     }
@@ -369,4 +373,4 @@ a#db-link:hover {
     100% {
         transform: rotate(720deg);
     }
-}
+} */
