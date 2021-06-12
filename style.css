@@ -1,10 +1,12 @@
+/* EVERYTHING */
+
 * {
+    /* This keeps the browser from including padding when calculating relative widths */
     box-sizing: border-box;
 }
 
-html {
-    height: 100vh;
-}
+
+/* GENERAL ELEMENTS */
 
 body {
     display: flex;
@@ -42,70 +44,13 @@ footer {
     width: 100%;
     left: 0px;
     bottom: 0px;
-    padding: 20px;
-}
-
-div#header-text {
-    flex-direction: column;
-    margin-top: 17px;
+    padding: 10px;
 }
 
 main {
     flex: 1 0 auto;
     width: 900px;
     margin: 0px auto 40px;
-}
-
-#title {
-    font-family: 'Syncopate', sans-serif;
-    font-weight: 700;
-    font-size: 3rem;
-    color: #111;
-    margin: 0px 0px 10px;
-}
-
-#search-box-title {
-    font-family: 'Syncopate', sans-serif;
-    font-weight: 400;
-    font-size: 1.7rem;
-    margin: 10px 0px 0px;
-}
-
-.drink-name {
-    font-family: 'Syncopate', sans-serif;
-    font-weight: 700;
-    font-size: 1.4rem;
-    margin: 0px 0px 5px;
-}
-
-#tagline {
-    font-family: 'Syncopate', sans-serif;
-    font-weight: 400;
-    font-size: 1.53rem;
-    text-transform: uppercase;
-    color: #1166c1;
-    margin: 0px;
-
-}
-
-.subheader {
-    font-weight: 600;
-    font-size: 1rem;
-    margin: 10px 0px 5px;
-}
-
-ul {
-    margin: 0px 0px 10px;
-}
-
-a#db-link {
-    color: #97c2f0;
-    font-weight: 700;
-    text-decoration: none;
-}
-
-a#db-link:hover {
-    color: #fff;
 }
 
 div {
@@ -128,67 +73,49 @@ button:hover{
     background-color: #111;
 }
 
-button#submit-button {
-    background-color: #1166c1;
+label {
+    font-size: 1.0rem;
 }
 
-button#submit-button:hover {
-    background-color: #1073dc;
+input, select {
+    font-size: 1.0rem;
+    height: 40px;
+    padding: 6px 8px 4px;
+    border-radius: 6px;
+    border: 1px solid #999;
 }
 
-img.drink {
-    border-radius: 10px 0px 0px 10px;
-    animation: none;
+ul {
+    margin: 0px 0px 10px;
 }
 
-img#empty-glass{
-    width: 250px;
-    margin: auto;
-    display: block;
-    animation: fade-in 2s;
-    cursor: pointer;
-}
 
-.capitalize {
-    text-transform: capitalize;
-}
+/* HEADER CONTENT */
 
-div#no-results {
+div#header-text {
     flex-direction: column;
+    margin-top: 17px;
+}
+
+#title {
     font-family: 'Syncopate', sans-serif;
     font-weight: 700;
-    font-size: 1.2rem;
-    text-align: center;
+    font-size: 3rem;
+    color: #111;
+    margin: 0px 0px 10px;
 }
 
-#no-results-text {
-    margin: 20px 0px 0px;
-}
-
-#num-results {
-    color: #1166c1;
-    font-family: 'Syncopate', sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-align: center;
-    margin: 10px 0px 20px;
-}
-
-.info {
+#tagline {
     font-family: 'Syncopate', sans-serif;
     font-weight: 400;
-    font-size: 0.85rem;
+    font-size: 1.53rem;
     text-transform: uppercase;
-    margin: 5px 0px;
+    color: #1166c1;
+    margin: 0px;
 }
 
-.glass {
-    font-style: italic;
-}
 
-.ingredients-list, .directions {
-    margin: 5px 0px;
-}
+/* FORM */
 
 #search-area {
     flex-direction: column;
@@ -208,21 +135,35 @@ div#no-results {
     justify-content: space-between;
 }
 
+#search-box-title {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin: 10px 0px 0px;
+}
+
 .input-item {
     margin: 10px 0px;
-    gap: 15px; /* spacing between radio buttons and buttons */
+    gap: 15px; /* spacing between buttons */
 }
 
-label {
-    font-size: 1.0rem;
+input[type=radio] {
+    height: auto; /* override general input style */
+    float: left;
+    margin-right: 8px;
+    cursor: pointer;
 }
 
-input, select {
+.type-label {
+    display: block;
+    height: 25px;
     font-size: 1.0rem;
-    height: 40px;
-    padding: 6px 8px 4px;
-    border-radius: 6px;
-    border: 1px solid #999;
+    margin-top: 10px;
+}
+
+#category-input {
+    width: 230px;
+    cursor: pointer;
 }
 
 #keyword-input {  
@@ -235,33 +176,36 @@ input, select {
     color: #bbb;
 }
 
-input[type=radio] {
-    height: auto; /* override general input style */
-    float: left;
-    margin-right: 8px;
-    cursor: pointer;
+button#submit-button {
+    background-color: #1166c1;
 }
 
-.type-input {
-    display: block;
-    height: 25px;
-    font-size: 1.0rem;
-    margin-top: 10px;
+button#submit-button:hover {
+    background-color: #1073dc;
 }
 
-#category-input {
-    width: 230px;
-    cursor: pointer;
-}
 
-#results-area {
+/* BELOW FORM */
+
+#results-area { /* encompasses both search-results and no-results */
     flex-direction: column;
     display: none;
     animation: none;
 }
 
-#cards-area {
+/* RESULTS COUNT & RECIPE CARDS */
+
+#search-results {
     flex-direction: column;
+}
+
+#num-results {
+    color: #1166c1;
+    font-family: 'Syncopate', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 10px 0px 20px;
 }
 
 div.recipe-card { 
@@ -275,25 +219,18 @@ div.recipe-card {
     box-shadow: 4px 4px 20px #ccc;
 }
 
-div.recipe-card-left {
+div.recipe-card-photo {
     padding: 0px;
     width: 400px;
     border-radius: 0px 0px 10px 10px;
 }
 
-div.color-bar-1 {
-    background-color: #333;
-    height: 100%;
-    width: 20px;
+img.drink {
+    border-radius: 10px 0px 0px 10px;
+    animation: none;
 }
 
-div.color-bar-2 {
-    height: 100%;
-    width: 20px;
-    margin-left: 0px;
-}
-
-div.recipe-card-right {
+div.recipe-card-info-area {
     color: #333;
     height: 100%;
     width: 500px;
@@ -305,11 +242,15 @@ div.recipe-info {
     overflow-y: scroll;
 }
 
-div.color-bar-3 {
+div.color-bar-1 {
     background-color: #333;
     height: 100%;
-    width: 50px;
-    border-radius: 0px 10px 10px 0px;
+    width: 20px;
+}
+
+div.color-bar-2 {
+    height: 100%;
+    width: 20px;
 }
 
 div.alcohol {
@@ -323,6 +264,83 @@ div.no-alcohol {
 div.optional {
     background-color: darkred;
 }
+
+div.color-bar-3 {
+    background-color: #333;
+    height: 100%;
+    width: 50px;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.drink-name {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin: 0px 0px 5px;
+}
+
+.info {
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    margin: 5px 0px;
+}
+
+.subheader {
+    font-weight: 600;
+    font-size: 1rem;
+    margin: 10px 0px 5px;
+}
+
+ul.ingredients-list, p.directions {
+    margin: 5px 0px;
+}
+
+p.glass-type {
+    font-style: italic;
+}
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+/* NO RESULTS IMAGE & TEXT */
+
+div#no-results {
+    flex-direction: column;
+    font-family: 'Syncopate', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+img#empty-glass{
+    width: 250px;
+    margin: auto;
+    display: block;
+    animation: fade-in 2s;
+    cursor: pointer;
+}
+
+#no-results-text {
+    margin: 20px 0px 0px;
+}
+
+
+/* FOOTER CONTENTS */
+
+a#db-link {
+    color: #97c2f0;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+a#db-link:hover {
+    color: #fff;
+}
+
+/* ANIMATIONS */
 
 @keyframes fade-in {
     from {
