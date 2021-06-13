@@ -59,9 +59,15 @@ function init() {
     });
 
     resetButton.addEventListener("click", () => {
-        if (currentDrinks.length > 0) {
+        // Only trigger full reset if cards are currently on the page
+        if (currentDrinks.length > 0) {  
+            noResultsText.innerHTML = "Ready for a new search?";     
             handleResetClick();        
         } else {
+            // Only change text if a search has already been done
+            if (noResultsText.innerHTML !== "Search for recipes above!") {
+                noResultsText.innerHTML = "Ready for a new search?";
+            } 
             spinGlass("click");
         }    
     });
@@ -100,7 +106,6 @@ function init() {
         // Update values
         currentDrinks = [];
         searchResults.innerHTML = "";
-        noResultsText.innerHTML = "Ready for a new search?";
         noResults.style.display = "block";
         // Trigger animations
         resetResultsArea(); 
@@ -254,6 +259,7 @@ function setRecipeCards() {
 /** FILTER DRINKS ACCORDING TO USER INPUT **/
 
 function filterDrinks(type, category, keyword) {
+    // Include drinks with type 'optional alcohol' either way
     if (type === "alcoholic") {
         currentDrinks = currentDrinks.filter(drink => {
             return (drink.type.toLowerCase() !== "non alcoholic");     
@@ -262,12 +268,14 @@ function filterDrinks(type, category, keyword) {
         currentDrinks = currentDrinks.filter(drink => {
             return (drink.type.toLowerCase() !== "alcoholic");     
         });
-    }
+    } 
+    // Make sure not to include first option
     if (category !== "" && category !== "category") {
         currentDrinks = currentDrinks.filter(drink => {
             return drink.category.toLowerCase() === category.toLowerCase();     
         });
     }
+    // Check both name and ingredients for match
     if (keyword !== "") {
         currentDrinks = currentDrinks.filter(drink => {
             let nameAndIngredients = (drink.name + drink.ingredients.join(" ")).toLowerCase();
