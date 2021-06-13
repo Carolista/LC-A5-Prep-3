@@ -1,19 +1,16 @@
 /**** WELCOME, STUDENTS! Read instructions.text before beginning. ****/
 
 /** GLOBAL VARIABLES **/
-let categories = [];
-let allDrinks = [];
-let currentDrinks = [];
+// TODO: initialize three empty arrays (see Part A, 2)
+
 let colorClasses = {
-    "alcoholic": "alcohol",
-    "non alcoholic": "no-alcohol",
-    "optional alcohol": "optional"
+    // TODO: add properties relating drink type with CSS class (see Part B, 6)
 }
 
 /** WINDOW LOAD LISTENER **/
 window.addEventListener("load", function() {
-    fetchDrinks();
-    // Note: init() is called at the end of fetchCategories() to make sure fetched data has returned from the API before the page is rendered. Each fetch function is chained to another like this.
+    // TODO: call fetch function for drinks (see Part A, 3)
+    // Note: init() should be called at the end of fetchCategories() to make sure fetched data has returned from the API before the page is rendered. Each fetch function is chained to another this way.
 });
 
 /** MAIN FUNCTION **/
@@ -21,84 +18,64 @@ function init() {
 
     /** CREATE OBJECTS FROM HTML ELEMENTS **/
     // FORM
-    // TODO: Add searchArea object (see Part C, 2a)
-    const keywordInput = document.getElementById("keyword-input");
-    const categoryInput = document.getElementById("category-input");
-    const submitButton = document.getElementById("submit-button");
-    const resetButton = document.getElementById("reset-button");
+    // TODO: Add searchArea object (see Part D, 2a)
+    // TODO: Add keywordInput, categoryInput, submitButton, and resetButton (see Part C, 1a)
     // BELOW FORM
-    // TODO: Add resultsArea object (see Part C, 2a)
-    const searchResults = document.getElementById("search-results");
-    const noResults = document.getElementById("no-results");
-    // TODO: Add emptyGlass object (see Part C, 2a)
-    const noResultsText = document.getElementById("no-results-text");
+    // TODO: Add resultsArea object (see Part D, 2a)
+    // TODO: Add searchResults, noResults, and noResultsText (see Part C, 1b)
+    // TODO: Add emptyGlass object (see Part D, 2a)
 
     /** POPULATE DROPDOWN INPUT WITH FETCHED DATA **/
-    categoryInput.innerHTML = setCategoryOptions();
+    // TODO: Set innerHTML of dropdown box (see Part B, 2)
 
-    // TODO: Copy in initial triggers for animations (see Part C, 2c)
+    // TODO: Copy in initial triggers for animations (see Part D, 2c)
 
     /** LISTEN FOR EVENTS **/
     submitButton.addEventListener("click", (event) => {    
-        // Create object for whichever radio button has just been checked  
-        const typeInput = document.querySelector("input[name=type-input]:checked");
-        // Validate that a radio button has in fact been checked and keyword field has no unallowed characters
-        if (typeInput === null) {
-            alert("\nPlease select alcoholic, non-alcoholic, or both.");
-        } else if (keywordInput.value !== "" && !keywordInput.value.trim().match(/^[A-Za-z0-9\-]+$/)) {
-            alert("\nPlease enter a single keyword with only letters and/or numbers.");
-        } else {
-            // If input is valid, pass type to handler function outside listener
-            handleSubmitClick(typeInput);
-        }
-        // Prevent browser from automatically reloading page
-        event.preventDefault();
+        // TODO: Add typeInput object to get the clicked radio button (see Part B, 3a)
+        // TODO: Validate the type and keyword inputs (see Part B, 5)
+        // TODO: Call the handler function (see Part B, 3c)
+        // TODO: Prevent the default page reload (see Part B, 3d)
     });
 
     resetButton.addEventListener("click", () => {
-        // TODO: Replace the line below (see Part C, 2d)
-        handleResetClick();        
- 
+        // TODO: Replace the single line of code below (see Part D, 2d)
+        // TODO: Call the handler for the reset button (see Part B, 4b) 
     });
 
-    // TODO: Add listener for empty glass image (see Part C, 2e)
+    // TODO: Add listener for empty glass image (see Part D, 2e)
 
     /** HANDLE SOME OF THE LOGIC FOR EVENT LISTENERS **/
     function handleSubmitClick(type) {       
-        // TODO: Call the resetResultsArea() function (see Part C, 2f)
-        // Make copy so allDrinks remains unchanged  
-        currentDrinks = allDrinks.slice();         
-        // Use results from form to filter data 
-        filterDrinks(type.value, categoryInput.value, keywordInput.value);
-        // Display any results matching filters
+        // TODO: Call the resetResultsArea() function (see Part D, 2f)
+        // TODO: Give currentDrinks all of the objects from allDrinks (see Part B, 3b-1)
+        // TODO: Call filterDrinks and pass in the three input values (see Part B, 3b-2)
+        // TODO: If there are results, sort them and set new values for searchResults innerHTML and noResults display - otherwise change the value of noResultsText.innerHTML (see Part B, 3b-3)
+        
         if (currentDrinks.length > 0) {
             // Alphabetize results by name of drink - see sort function at bottom
-            sortByName(currentDrinks, 0, currentDrinks.length-1);
+            
             // Update values
-            searchResults.innerHTML = setRecipeCards();
-            noResults.style.display = "none";
+            
             // Trigger animations
-            // TODO: Add setTimeout function with fadeInResultsArea() (see Part C, 2f)
+            // TODO: Add setTimeout function with fadeInResultsArea() (see Part D, 2f)
         } else {
             // Update values
-            noResultsText.innerHTML = "No results found. Try again!";
-            // Trigger animations
-            // TODO: Call handleResetClick() (see Part C, 2f)
             
+            // Trigger animations
+            // TODO: Call handleResetClick() (see Part D, 2f)         
         }
     };
     function handleResetClick() { 
         // Update values
-        currentDrinks = [];
-        searchResults.innerHTML = "";
-        noResultsText.innerHTML = "Ready for a new search?";
-        noResults.style.display = "block";
+        // TODO: Reset currentDrinks, searchResults, noResultsText, and noResults (see Part B, 4a) 
+
         // Trigger animations
-        // TODO: Call three functions (see Part C, 2g)
+        // TODO: Call three functions (see Part D, 2g)
         
     };
 
-    // TODO: Add animation trigger functions (see Part C, 2b)
+    // TODO: Add animation trigger functions (see Part D, 2b)
 
 } // End of init()
 
@@ -152,12 +129,12 @@ function fetchDrinks() {
             });
         });
     }
-    console.log("Drinks loaded.");
     fetchCategories();
 }
 
 // Get all possible categories from API, needed for Category dropdown input
 function fetchCategories() {
+    // TODO: fetch the list of categories from the API (see Part A, 4-6)
     fetch("https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list").then( function(response) {
         response.json().then( function(json) {
             let categoryObjects = json.drinks;
