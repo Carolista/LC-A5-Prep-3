@@ -1,5 +1,153 @@
 POUR ME ANOTHER | DRINK RECIPES
 
 This app utilizes TheCocktailDB; details are here: https://www.thecocktaildb.com/api.php
+ 
+
+**** BEFORE YOU START ****
+
+1. Take a minute to study the HTML elements in index.html so you understand how all the elements on the page relate to one another. That's important in order for you to add dynamic functionality.
+
+2. You should also look at the sample.json file to see what a typical drink object looks like when it arrives from the API. (In this case, it is just at drinks[0] because there is only one.) The creator of this API unfortunately used 15 ingredient properties and 15 measure properties instead of just using parallel arrays, which is why I have written the fetchDrinks() function for you.
 
 
+**** PART A: FETCH DATA 
+
+1. In the <head> of index.html, un-comment the <script> element so your page can access the JavaScript code.
+
+2. At the very top of scripts.js, initialize three empty arrays called categories, allDrinks, and currentDrinks.
+
+3. In the window load listener toward the top, call the fetchDrinks() function, which has already been written. It will call the fetchCategories() function in turn.
+
+4. Below the fetchDrinks() function (which is below init()), write the fetchCategories() function to go get the data needed to create a list of categories that will be used to populate the dropdown field in the form. Console.log the JSON and open the console in dev tools so that you can confirm the data has arrived properly when the page loads.
+
+5. Once you've confirmed the data, add code to retrieve the category of each object and place each string into the new categories array you created. Bonus: replace any instances of " / " with "/" so they read better.
+Temporarily console.log categories after looping through to confirm all the strings are there as expected. You should see the following: 
+
+    ["Beer", "Cocktail", "Cocoa", "Coffee/Tea", "Homemade Liqueur", "Milk/Float/Shake", "Ordinary Drink", "Other/Unknown", "Punch/Party Drink", "Shot", "Soft Drink/Soda"]
+
+Congrats! You should now have all the drinks and all the categories being fetched from the API.
+
+6. Don't forget to call init() from the fetchCategories() function - and it's important where you place it to ensure the page doesn't continue to load until the data has been received. (This will not be the same as the way fetchCategories() has been called from fetchDrinks().)
+
+
+**** PART B: CREATE OBJECTS & LISTENERS ****
+
+1. Add objects that will link to elements in index.html.
+    a) First get the ones inside the form (except type-input) and call them keywordInput, categoryInput, submitButton, and resetButton.
+    b) Then get some of the ones below the form -- call them searchResults, noResults, and noResultsText.
+    
+2. Just below that, populate the Category dropdown by setting its innerHTML using the setCategoryOptions() function that has already been prepared for you. If done correctly, when the page reloads you'll have a working dropdown!
+
+3. Now it's time to get our listeners in place. The first is for the submit button.
+    a) The first thing needed is an object, called typeInput, representing the checked radio button. We can't put this with the other objects at the top of init() because we don't yet know which one will be checked when Submit is clicked and we have to store that specific button in typeInput. If it were declared with the others outside the submit button listener, it would get an initial value of null and never change.
+    b) Now before we add anything else to the listener itself, let's go down to the function called handleSubmitClick(). There are several steps to put in place here before we can call it in the listener.
+        1) Give currentDrinks the value of allDrinks. Use .slice() to ensure it is a separate array and not just a reference to allDrinks - we need that data to stay intact since we are about to use the user's input to filter down currentDrinks.
+        2) Call filterDrinks() and pass in the type (which will be passed into handleSubmitClick()), the keywordInput, and the categoryInput. If the user has selected any of these filters, the contents of currentDrinks will change.
+        3) Now we have two possible situations - either currentDrinks still holds drink objects that can be displayed to the user, OR their filter(s) didn't produce any matches, in which case currentDrinks is now empty. If there ARE results to display, do the following:
+            - Call sortByName() and pass in the currentDrinks array and its starting and ending indices. This will put all the results in order alphabetically by the name of the drink.
+            - Set the innerHTML of searchResults by calling setRecipeCards() (scroll down to inspect it so you understand how the HTML is being built and returned).
+            - Set the style property 'display' of noResults to "none" so that the glass image and the text below it will disappear before the recipe cards display.
+        However, if there are NOT any results, you should simply set the innerHTML of noResultsText to "No results found. Try again!"
+    c) Go back up to your submit button event listener. Now you can call the function handleSubmitClick() and pass in typeInput as the parameter (since the handler is outside the listener and doesn't have access to it otherwise). 
+    d) The last thing you need in the listener is to prevent the browser from reloading the page.
+
+4. Let's look at the reset button event listener. We will actually call the function handleResetClick() in a minute, but first we need to go add its code.
+    a) Go down to handleResetClick(). When the button is clicked, we need several things to happen. 
+        1) We don't have to worry about the form fields clearing - the browser actually recognizes the type="submit" attribute in the HTML and does it automatically.
+        2) Reset the value of currentDrinks to be an empty array again.
+        3) Reset the innerHTML of searchResults to be an empty string. 
+        4) Set the style property 'display' of noResults to "block" so that the glass and the message below it will be visible again.
+    b) Go back to the reset button event listener. 
+        1) If currentDrinks is not empty, reset the innerHTML of noResultsText to be "Ready for a new search?" and then call the function handleResetClick().
+        2) Otherwise, if currentDrinks is empty, and if the current innerHTML of noResultsText isn't its starting value ("Search for recipes above!"), reset the innerHTML of noResultsText to be "Ready for a new search?")
+
+5. We need to validate the user input for the submit button. Go to its event listener.
+    a) If the user forgets to select a radio button, raise an alert message and then make sure the handler isn't called.
+    b) If the user enters a keyword but there is something other than alphanumeric characters or a hyphen, raise an alert message and then make sure the handler isn't called. The RegEx match for this is /^[A-Za-z0-9\-]+$/
+
+6. One last thing - one of the color blocks on the recipe card is meant to be variable. Add the following to the top of scripts.js to connect the category values to the CSS classes:
+    "alcoholic": "alcohol",
+    "non alcoholic": "no-alcohol",
+    "optional alcohol": "optional"
+
+
+*** PART C: STYLE IT UP ****
+
+Everything in styles.css has been prepared for you - just un-comment the three <link> elements in the <head> of index.html to link both it and the Google fonts. Et voilà!
+
+
+**** PART D: ADD ANIMATIONS ****
+
+1. Go to styles.css. 
+    a) Un-comment the display and animation properties of both #search-area and #results-area. 
+    b) At the very bottom, uncomment all @keyframes.
+
+2. Go to scripts.js.
+
+    a) Add objects representing the #search-area and #results-area divs and the #empty-glass image to the lists of objects at the beginning of the init() function where indicated by the TODOs.
+
+        const searchArea = document.getElementById("search-area");
+        const resultsArea = document.getElementById("results-area");
+        const emptyGlass = document.getElementById("empty-glass");
+
+    b) Add the following just after the handleResetClick() function at the end of init()):
+
+        /** TRIGGER AND RESET ANIMATIONS AS NEEDED **/
+        function fadeInSearchBox() {
+            searchArea.style.display = "block";
+            searchArea.style.animation = "fade-in 3s";
+        };
+        function resetResultsArea() {
+            resultsArea.style.display = "none";
+            resultsArea.style.animation = "none";   
+        };
+        function fadeInResultsArea() {
+            resultsArea.style.display = "block";
+            resultsArea.style.animation = "fade-in 2s";
+        };
+        function spinGlass(mode) {
+            emptyGlass.style.animation = (mode === "zoom" ? "zoom-spin 2s" : "spin-only 1.5s");
+            let spin = emptyGlass.getAnimations()[0];
+            spin.finish();
+            spin.play();
+            emptyGlass.style.animation = "none";
+        };
+
+    c) Add the following inside init(), just after the dropdown population with
+    categoryInput.innerHTML = setCategoryOptions():
+
+        /** MAKE SEARCH AREA & RESULTS AREA VISIBLE UPON LOAD **/
+        fadeInSearchBox();
+        fadeInResultsArea();
+        spinGlass("zoom");
+
+    d) In the reset button event listener, add the following to the condition that currentDrinks is empty:
+
+        spinGlass("click");
+
+    e) Just below the rest button event listener, add a new event listener for the empty glass image by pasting in the following:
+
+        emptyGlass.addEventListener("click", () => {
+            spinGlass("click");
+        });
+
+    f) Inside the handleSubmitClick() function, add the following to different places as directed by text in parentheses:
+
+        (at the beginning)
+            // Temporarily hide everything below form and remove animation
+            resetResultsArea();
+
+        (in the if block, just after // Trigger animations)
+            setTimeout(() => {         
+                fadeInResultsArea();
+            }, 150); // Slight delay to accommodate image loading
+
+        (in the else block, just after // Trigger animations)
+            handleResetClick();
+
+    g) Inside the handleResetClick() function, add the following:
+
+        (below // Trigger animations)
+            resetResultsArea(); 
+            fadeInResultsArea();
+            spinGlass("zoom");
