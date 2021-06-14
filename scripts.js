@@ -1,4 +1,8 @@
-/**** WELCOME, STUDENTS! Read instructions.text before beginning. ****/
+/**** 
+ * WELCOME, STUDENTS! 
+ * Read instructions.text before beginning.
+ * Do the TODOs in the order of the instructions, not as you see them below.
+ ****/
 
 /** GLOBAL VARIABLES **/
 // TODO: initialize three empty arrays (see Part A, 2)
@@ -17,9 +21,11 @@ window.addEventListener("load", function() {
 function init() {
 
     /** CREATE OBJECTS FROM HTML ELEMENTS **/
+
     // FORM
     // TODO: Add searchArea object (see Part D, 2a)
     // TODO: Add keywordInput, categoryInput, submitButton, and resetButton (see Part B, 1a)
+
     // BELOW FORM
     // TODO: Add resultsArea object (see Part D, 2a)
     // TODO: Add searchResults, noResults, and noResultsText (see Part B, 1b)
@@ -31,7 +37,7 @@ function init() {
     // TODO: Copy in initial triggers for animations (see Part D, 2c)
 
     /** LISTEN FOR EVENTS **/
-    submitButton.addEventListener("click", (event) => {    
+    submitButton.addEventListener("click", () => {    
         // TODO: Add typeInput object to get the clicked radio button (see Part B, 3a)
         // TODO: Validate the type and keyword inputs (see Part B, 5)
         // TODO: Call the handler function (see Part B, 3c)
@@ -39,8 +45,8 @@ function init() {
     });
 
     resetButton.addEventListener("click", () => {
-        // TODO: Replace the single line of code below (see Part D, 2d)
-        // TODO: Call the handler for the reset button (see Part B, 4b) 
+        // TODO: Change the value of noResultsText and call the handler for the reset button depending on the value of currentDrinks (see Part B, 4b) 
+        // TODO: Add spinGlass("click") to the condition that currentDrinks is empty (see Part D, 2d)
     });
 
     // TODO: Add listener for empty glass image (see Part D, 2e)
@@ -49,30 +55,28 @@ function init() {
     function handleSubmitClick(type) {       
         // TODO: Call the resetResultsArea() function (see Part D, 2f)
         // TODO: Give currentDrinks all of the objects from allDrinks (see Part B, 3b-1)
-        // TODO: Call filterDrinks and pass in the three input values (see Part B, 3b-2)
-        // TODO: If there are results, sort them and set new values for searchResults innerHTML and noResults display - otherwise change the value of noResultsText.innerHTML (see Part B, 3b-3)
-        
+        // TODO: Call filterDrinks and pass in the three input values (see Part B, 3b-2)     
         if (currentDrinks.length > 0) {
-            // Alphabetize results by name of drink - see sort function at bottom
+            // TODO: alphabetize results by name of drink - see sort function at bottom (see Part B, 3b-3)
             
             // Update values
+            // TODO: add the recipe cards to the innerHTML of searchResults
+            // TODO: change the value of 'display' for noResults to hide it
             
             // Trigger animations
             // TODO: Add setTimeout function with fadeInResultsArea() (see Part D, 2f)
         } else {
             // Update values
-            
+            // TODO: Change the value of the innerHTML for noResultsText (see Part B, 3b-3)
             // Trigger animations
             // TODO: Call handleResetClick() (see Part D, 2f)         
         }
     };
     function handleResetClick() { 
         // Update values
-        // TODO: Reset currentDrinks, searchResults, noResultsText, and noResults (see Part B, 4a, 2-5) 
-
+        // TODO: Reset currentDrinks, searchResults, and noResults (see Part B, 4a, 2-4) 
         // Trigger animations
         // TODO: Call three functions (see Part D, 2g)
-        
     };
 
     // TODO: Add animation trigger functions (see Part D, 2b)
