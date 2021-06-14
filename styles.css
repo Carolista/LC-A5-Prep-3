@@ -126,7 +126,7 @@ div#header-text {
     border-radius: 10px;
     margin-bottom: 20px;
     box-shadow: 4px 4px 20px #ddd;
-    /* TODO: uncomment lines below (see Part C, 1a) */
+    /* TODO: uncomment lines below (see Part D, 1a) */
     /* display: none;
     animation: none; */
 }
@@ -190,7 +190,7 @@ button#submit-button:hover {
 
 #results-area { /* encompasses both search-results and no-results */
     flex-direction: column;
-    /* TODO: uncomment lines below (see Part C, 1a) */
+    /* TODO: uncomment lines below (see Part D, 1a) */
     /* display: none; */
     /* animation: none; */
 }
@@ -344,7 +344,7 @@ a#db-link:hover {
 
 /* ANIMATIONS */
 
-/* TODO: uncomment lines below (see Part C, 1b) */
+/* TODO: uncomment lines below (see Part D, 1b) */
 
 /* @keyframes fade-in {
     from {

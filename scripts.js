@@ -21,22 +21,22 @@ function init() {
 
     /** CREATE OBJECTS FROM HTML ELEMENTS **/
     // FORM
-    // TODO: Add searchArea object (see Part C, 2a)
+    // TODO: Add searchArea object (see Part D, 2a)
     const keywordInput = document.getElementById("keyword-input");
     const categoryInput = document.getElementById("category-input");
     const submitButton = document.getElementById("submit-button");
     const resetButton = document.getElementById("reset-button");
     // BELOW FORM
-    // TODO: Add resultsArea object (see Part C, 2a)
+    // TODO: Add resultsArea object (see Part D, 2a)
     const searchResults = document.getElementById("search-results");
     const noResults = document.getElementById("no-results");
-    // TODO: Add emptyGlass object (see Part C, 2a)
+    // TODO: Add emptyGlass object (see Part D, 2a)
     const noResultsText = document.getElementById("no-results-text");
 
     /** POPULATE DROPDOWN INPUT WITH FETCHED DATA **/
     categoryInput.innerHTML = setCategoryOptions();
 
-    // TODO: Copy in initial triggers for animations (see Part C, 2c)
+    // TODO: Copy in initial triggers for animations (see Part D, 2c)
 
     /** LISTEN FOR EVENTS **/
     submitButton.addEventListener("click", (event) => {    
@@ -56,16 +56,24 @@ function init() {
     });
 
     resetButton.addEventListener("click", () => {
-        // TODO: Replace the line below (see Part C, 2d)
-        handleResetClick();        
- 
+        // Only trigger full reset if cards are currently on the page
+        if (currentDrinks.length > 0) {  
+            noResultsText.innerHTML = "Ready for a new search?";     
+            handleResetClick();        
+        } else {
+            // Only change text if a search has already been done
+            if (noResultsText.innerHTML !== "Search for recipes above!") {
+                noResultsText.innerHTML = "Ready for a new search?";
+            } 
+            // TODO: Spin the glass the condition that currentDrinks is empty (see Part D, 2d)
+        }         
     });
 
-    // TODO: Add listener for empty glass image (see Part C, 2e)
+    // TODO: Add listener for empty glass image (see Part D, 2e)
 
     /** HANDLE SOME OF THE LOGIC FOR EVENT LISTENERS **/
     function handleSubmitClick(type) {       
-        // TODO: Call the resetResultsArea() function (see Part C, 2f)
+        // TODO: Call the resetResultsArea() function (see Part D, 2f)
         // Make copy so allDrinks remains unchanged  
         currentDrinks = allDrinks.slice();         
         // Use results from form to filter data 
@@ -78,12 +86,12 @@ function init() {
             searchResults.innerHTML = setRecipeCards();
             noResults.style.display = "none";
             // Trigger animations
-            // TODO: Add setTimeout function with fadeInResultsArea() (see Part C, 2f)
+            // TODO: Add setTimeout function with fadeInResultsArea() (see Part D, 2f)
         } else {
             // Update values
             noResultsText.innerHTML = "No results found. Try again!";
             // Trigger animations
-            // TODO: Call handleResetClick() (see Part C, 2f)
+            // TODO: Call handleResetClick() (see Part D, 2f)
             
         }
     };
@@ -94,11 +102,11 @@ function init() {
         noResultsText.innerHTML = "Ready for a new search?";
         noResults.style.display = "block";
         // Trigger animations
-        // TODO: Call three functions (see Part C, 2g)
+        // TODO: Call three functions (see Part D, 2g)
         
     };
 
-    // TODO: Add animation trigger functions (see Part C, 2b)
+    // TODO: Add animation trigger functions (see Part D, 2b)
 
 } // End of init()
 
