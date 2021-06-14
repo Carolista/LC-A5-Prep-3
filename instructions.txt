@@ -7,7 +7,7 @@ This app utilizes TheCocktailDB; details are here: https://www.thecocktaildb.com
 
 1. Take a minute to study the HTML elements in index.html so you understand how all the elements on the page relate to one another. That's important in order for you to add dynamic functionality.
 
-2. You should also look at the sample.json file to see what a typical drink object looks like after it arrives in an array. (In this case, it is just drinks[0] because there is only one.) The creator of this API unfortunately used 15 ingredient properties and 15 measure properties instead of just using parallel arrays, which is why I have written the fetchDrinks() function for you.
+2. You should also look at the sample.json file to see what a typical drink object looks like when it arrives from the API. (In this case, it is just at drinks[0] because there is only one.) The creator of this API unfortunately used 15 ingredient properties and 15 measure properties instead of just using parallel arrays, which is why I have written the fetchDrinks() function for you.
 
 
 **** PART A: FETCH DATA 
@@ -52,7 +52,7 @@ Congrats! You should now have all the drinks and all the categories being fetche
     d) The last thing you need in the listener is to prevent the browser from reloading the page.
 
 4. Let's look at the reset button event listener. We will actually call the function handleResetClick() in a minute, but first we need to go add its code.
-    a) Go down to handleSubmitClick(). When the button is clicked, we need several things to happen. 
+    a) Go down to handleResetClick(). When the button is clicked, we need several things to happen. 
         1) We don't have to worry about the form fields clearing - the browser actually recognizes the type="submit" attribute in the HTML and does it automatically.
         2) Reset the value of currentEvents to be an empty array again.
         3) Reset the innerHTML of searchResults to be an empty string.
@@ -62,9 +62,7 @@ Congrats! You should now have all the drinks and all the categories being fetche
 
 5. We need to validate the user input for the submit button. Go to its event listener.
     a) If the user forgets to select a radio button, raise an alert message and then make sure the handler isn't called.
-    b) If the user enters a keyword but there is something other than alphanumeric characters or a hyphen, raise an alert message and then make sure the handler isn't called. The RegEx match for this is:
-
-        /^[A-Za-z0-9\-]+$/
+    b) If the user enters a keyword but there is something other than alphanumeric characters or a hyphen, raise an alert message and then make sure the handler isn't called. The RegEx match for this is /^[A-Za-z0-9\-]+$/
 
 6. One last thing - one of the color blocks on the recipe card is meant to be variable. Add the following to the top of scripts.js to connect the category values to the CSS classes:
     "alcoholic": "alcohol",
@@ -85,10 +83,9 @@ Everything in styles.css has been prepared for you - just un-comment the three <
 
 2. Go to scripts.js.
 
-    a) Add objects representing the #search-area and #results-area divs and the #empty-glass image to the lists of objects at the beginning of the init() function.
+    a) Add objects representing the #search-area and #results-area divs and the #empty-glass image to the lists of objects at the beginning of the init() function where indicated by the TODOs.
 
         const searchArea = document.getElementById("search-area");
-
         const resultsArea = document.getElementById("results-area");
         const emptyGlass = document.getElementById("empty-glass");
 

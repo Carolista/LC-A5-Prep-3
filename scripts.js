@@ -19,10 +19,10 @@ function init() {
     /** CREATE OBJECTS FROM HTML ELEMENTS **/
     // FORM
     // TODO: Add searchArea object (see Part D, 2a)
-    // TODO: Add keywordInput, categoryInput, submitButton, and resetButton (see Part C, 1a)
+    // TODO: Add keywordInput, categoryInput, submitButton, and resetButton (see Part B, 1a)
     // BELOW FORM
     // TODO: Add resultsArea object (see Part D, 2a)
-    // TODO: Add searchResults, noResults, and noResultsText (see Part C, 1b)
+    // TODO: Add searchResults, noResults, and noResultsText (see Part B, 1b)
     // TODO: Add emptyGlass object (see Part D, 2a)
 
     /** POPULATE DROPDOWN INPUT WITH FETCHED DATA **/
@@ -68,7 +68,7 @@ function init() {
     };
     function handleResetClick() { 
         // Update values
-        // TODO: Reset currentDrinks, searchResults, noResultsText, and noResults (see Part B, 4a) 
+        // TODO: Reset currentDrinks, searchResults, noResultsText, and noResults (see Part B, 4a, 2-5) 
 
         // Trigger animations
         // TODO: Call three functions (see Part D, 2g)
@@ -134,7 +134,7 @@ function fetchDrinks() {
 
 // Get all possible categories from API, needed for Category dropdown input
 function fetchCategories() {
-    // TODO: fetch the list of categories from the API (see Part A, 4-6)
+    // TODO: fetch the list of categories from the API, put each string into our global categories array, then call init() (see Part A, 4-6)
     fetch("https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list").then( function(response) {
         response.json().then( function(json) {
             let categoryObjects = json.drinks;
